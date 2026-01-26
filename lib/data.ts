@@ -138,6 +138,7 @@ export const PROJECTS: IProject[] = [
     {
         title: 'Exam Portal',
         slug: 'exam-portal',
+        liveUrl: 'https://csiexamportal.netlify.app/',
         sourceCode: 'https://github.com/Sukriti-m/exam-portal-2.0',
         year: 2024,
         description: `
