@@ -1,159 +1,199 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { MoveUpRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
+import { useEffect, useState } from 'react';
 
-const COLORS = [
-    'bg-yellow-500 text-black',
-    'bg-blue-500 text-white',
-    'bg-teal-500 text-black',
-    'bg-indigo-500 text-white',
-];
-
-const MENU_LINKS = [
+const NAV_LINKS = [
     {
         name: 'Home',
-        url: '/',
+        href: '#banner',
     },
     {
-        name: 'About Me',
-        url: '/#about-me',
+        name: 'Skills',
+        href: '#my-stack',
     },
     {
         name: 'Experience',
-        url: '/#my-experience',
+        href: '#my-experience',
     },
     {
         name: 'Projects',
-        url: '/#selected-projects',
+        href: '#selected-projects',
     },
 ];
 
 const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const router = useRouter();
+    const [activeSection, setActiveSection] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = NAV_LINKS.map((link) => ({
+                id: link.href.substring(1),
+                href: link.href,
+            }));
+
+            const scrollPosition = window.scrollY + 120; // Account for navbar height + some offset
+
+            // Find the section that is currently in view
+            let currentSection = sections[0].href; // Default to first section
+
+            // Check sections from bottom to top
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const section = document.getElementById(sections[i].id);
+                if (section) {
+                    const sectionTop = section.offsetTop;
+                    
+                    // If scroll position has passed this section's top, this is the active section
+                    if (scrollPosition >= sectionTop) {
+                        currentSection = sections[i].href;
+                        break;
+                    }
+                }
+            }
+
+            setActiveSection(currentSection);
+        };
+
+        // Use requestAnimationFrame for smoother scroll detection
+        let ticking = false;
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        handleScroll(); // Initial check
+
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        e.preventDefault();
+        // Set active section immediately when clicking
+        setActiveSection(href);
+        
+        const element = document.querySelector(href);
+        if (element) {
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - 80; // 80px for navbar height
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth',
+            });
+            setIsMobileMenuOpen(false);
+        }
+    };
 
     return (
-        <>
-            <div className="sticky top-0 z-[4]">
-                <button
-                    className={cn(
-                        'group size-12 absolute top-5 right-5 md:right-10 z-[2]',
-                    )}
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                >
-                    <span
-                        className={cn(
-                            'inline-block w-3/5 h-0.5 bg-foreground rounded-full absolute left-1/2 -translate-x-1/2 top-1/2 duration-300 -translate-y-[5px] ',
-                            {
-                                'rotate-45 -translate-y-1/2': isMenuOpen,
-                                'md:group-hover:rotate-12': !isMenuOpen,
-                            },
-                        )}
-                    ></span>
-                    <span
-                        className={cn(
-                            'inline-block w-3/5 h-0.5 bg-foreground rounded-full absolute left-1/2 -translate-x-1/2 top-1/2 duration-300 translate-y-[5px] ',
-                            {
-                                '-rotate-45 -translate-y-1/2': isMenuOpen,
-                                'md:group-hover:-rotate-12': !isMenuOpen,
-                            },
-                        )}
-                    ></span>
-                </button>
-            </div>
+        <nav className="fixed top-0 left-0 right-0 z-[50] bg-background/80 backdrop-blur-sm border-b border-border/50">
+            <div className="container">
+                <div className="flex items-center justify-between h-16 md:h-20">
+                    {/* Logo/Brand */}
+                    <div className="text-xl md:text-2xl font-anton">
+                        <a
+                            href="#banner"
+                            onClick={(e) => handleClick(e, '#banner')}
+                            className="hover:text-primary transition-colors"
+                        >
+                            Sukriti
+                        </a>
+                    </div>
 
-            <div
-                className={cn(
-                    'overlay fixed inset-0 z-[2] bg-black/70 transition-all duration-150',
-                    {
-                        'opacity-0 invisible pointer-events-none': !isMenuOpen,
-                    },
-                )}
-                onClick={() => setIsMenuOpen(false)}
-            ></div>
+                    {/* Navigation Links*/}
+                    <div className="hidden md:flex items-center gap-10">
+                        {NAV_LINKS.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                onClick={(e) => handleClick(e, link.href)}
+                                className={cn(
+                                    'text-sm uppercase font-anton tracking-wider transition-colors relative py-2',
+                                    {
+                                        'text-primary': activeSection === link.href,
+                                        'text-muted-foreground hover:text-foreground':
+                                            activeSection !== link.href,
+                                    },
+                                )}
+                            >
+                                {link.name}
+                                {activeSection === link.href && (
+                                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                                )}
+                            </a>
+                        ))}
+                    </div>
 
-            <div
-                className={cn(
-                    'fixed top-0 right-0 h-[100dvh] w-[500px] max-w-[calc(100vw-3rem)] transform translate-x-full transition-transform duration-700 z-[3] overflow-hidden gap-y-14',
-                    'flex flex-col lg:justify-center py-10',
-                    { 'translate-x-0': isMenuOpen },
-                )}
-            >
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden flex flex-col gap-1.5 p-2"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        <span
+                            className={cn(
+                                'w-6 h-0.5 bg-foreground transition-all duration-300',
+                                {
+                                    'rotate-45 translate-y-2': isMobileMenuOpen,
+                                },
+                            )}
+                        />
+                        <span
+                            className={cn(
+                                'w-6 h-0.5 bg-foreground transition-all duration-300',
+                                {
+                                    'opacity-0': isMobileMenuOpen,
+                                },
+                            )}
+                        />
+                        <span
+                            className={cn(
+                                'w-6 h-0.5 bg-foreground transition-all duration-300',
+                                {
+                                    '-rotate-45 -translate-y-2': isMobileMenuOpen,
+                                },
+                            )}
+                        />
+                    </button>
+                </div>
+
+                {/* Mobile Menu */}
                 <div
                     className={cn(
-                        'fixed inset-0 scale-150 translate-x-1/2 rounded-[50%] bg-background-light duration-700 delay-150 z-[-1]',
+                        'md:hidden overflow-hidden transition-all duration-300',
                         {
-                            'translate-x-0': isMenuOpen,
+                            'max-h-0': !isMobileMenuOpen,
+                            'max-h-96 pb-4': isMobileMenuOpen,
                         },
                     )}
-                ></div>
-
-                <div className="grow flex md:items-center w-full max-w-[300px] mx-8 sm:mx-auto">
-                    <div className="flex gap-10 lg:justify-between max-lg:flex-col w-full">
-                        <div className="max-lg:order-2">
-                            <p className="text-muted-foreground mb-5 md:mb-8">
-                                SOCIAL
-                            </p>
-                            <ul className="space-y-3">
-                                {SOCIAL_LINKS.map((link) => (
-                                    <li key={link.name}>
-                                        <a
-                                            href={link.url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="text-lg capitalize hover:underline"
-                                        >
-                                            {link.name}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="">
-                            <p className="text-muted-foreground mb-5 md:mb-8">
-                                MENU
-                            </p>
-                            <ul className="space-y-3">
-                                {MENU_LINKS.map((link, idx) => (
-                                    <li key={link.name}>
-                                        <button
-                                            onClick={() => {
-                                                router.push(link.url);
-                                                setIsMenuOpen(false);
-                                            }}
-                                            className="group text-xl flex items-center gap-3"
-                                        >
-                                            <span
-                                                className={cn(
-                                                    'size-3.5 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-[200%] transition-all',
-                                                    COLORS[idx],
-                                                )}
-                                            >
-                                                <MoveUpRight
-                                                    size={8}
-                                                    className="scale-0 group-hover:scale-100 transition-all"
-                                                />
-                                            </span>
-                                            {link.name}
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                >
+                    <div className="flex flex-col gap-6 pt-4 border-t border-border">
+                        {NAV_LINKS.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                onClick={(e) => handleClick(e, link.href)}
+                                className={cn(
+                                    'text-sm uppercase font-anton tracking-wider transition-colors py-2',
+                                    {
+                                        'text-primary': activeSection === link.href,
+                                        'text-muted-foreground hover:text-foreground':
+                                            activeSection !== link.href,
+                                    },
+                                )}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
                     </div>
                 </div>
-
-                <div className="w-full max-w-[300px] mx-8 sm:mx-auto">
-                    <p className="text-muted-foreground mb-4">GET IN TOUCH</p>
-                    <a href={`mailto:${GENERAL_INFO.email}`}>
-                        {GENERAL_INFO.email}
-                    </a>
-                </div>
             </div>
-        </>
+        </nav>
     );
 };
 
