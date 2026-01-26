@@ -50,21 +50,28 @@ const Banner = () => {
                         <span className="font-medium text-foreground">
                             Sukriti
                         </span>
-                        . A creative Frontend Developer passionate about building
-                        high-performance, scalable, and responsive web solutions
-                        with a focus on user-centered design and intuitive
-                        experiences.
+                        . Frontend Software Engineer with 1+ year of experience building scalable, customer-facing SaaS products. Experienced in owning features end-to-end, improving UX, and integrating complex backend workflows.
                     </p>
-                    <Button
-                        as="link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={GENERAL_INFO.resume}
-                        variant="primary"
-                        className="mt-9 banner-button slide-up-and-fade"
-                    >
-                        Hire Me
-                    </Button>
+                    <div className="mt-9 flex gap-4 flex-wrap banner-button slide-up-and-fade">
+                        <Button
+                            as="link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href={GENERAL_INFO.resume}
+                            variant="primary"
+                            className="flex items-center gap-2"
+                        >
+                            View Resume
+                        </Button>
+                        <Button
+                            as="link"
+                            href={`mailto:${GENERAL_INFO.email}?subject=${encodeURIComponent(GENERAL_INFO.emailSubject)}&body=${encodeURIComponent(GENERAL_INFO.emailBody)}`}
+                            variant="no-color"
+                            className="flex items-center gap-2 border bg-background hover:bg-primary hover:text-primary-foreground transition-colors"
+                        >
+                            Email Me
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="md:absolute bottom-[10%] right-[4%] flex md:flex-col gap-4 md:gap-8 text-center md:text-right">

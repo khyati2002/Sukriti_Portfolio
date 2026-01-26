@@ -39,14 +39,6 @@ export const MY_STACK = {
             icon: '/logo/tailwind.png',
         },
         {
-            name: 'GSAP',
-            icon: '/logo/gsap.png',
-        },
-        {
-            name: 'Framer Motion',
-            icon: '/logo/framer-motion.png',
-        },
-        {
             name: 'Sass',
             icon: '/logo/sass.png',
         },
@@ -61,10 +53,6 @@ export const MY_STACK = {
             icon: '/logo/node.png',
         },
         {
-            name: 'NestJS',
-            icon: '/logo/nest.svg',
-        },
-        {
             name: 'Express.js',
             icon: '/logo/express.png',
         },
@@ -75,26 +63,14 @@ export const MY_STACK = {
             icon: '/logo/mysql.svg',
         },
         {
-            name: 'PostgreSQL',
-            icon: '/logo/postgreSQL.png',
-        },
-        {
             name: 'MongoDB',
             icon: '/logo/mongodb.svg',
-        },
-        {
-            name: 'Prisma',
-            icon: '/logo/prisma.png',
-        },
+        }
     ],
     tools: [
         {
             name: 'Git',
             icon: '/logo/git.png',
-        },
-        {
-            name: 'Docker',
-            icon: '/logo/docker.svg',
         },
         {
             name: 'AWS',
@@ -108,32 +84,10 @@ export const PROJECTS: IProject[] = [
         title: 'Admin Insights',
         slug: 'admin-insights',
         liveUrl: 'https://admin-insights-three.vercel.app/',
+        sourceCode: 'https://github.com/Sukriti-m/Admin_Insights',
         year: 2024,
         description: `
-      A full-featured admin dashboard designed for real-world admin workflows, featuring comprehensive user management, task tracking, analytics, chat functionality, and configurable system settings. <br/> <br/>
-      
-      Key Features:<br/>
-      <ul>
-        <li>👥 User Management: Complete user administration with search, filtering, and role-based access</li>
-        <li>📊 Analytics Dashboard: Real-time data visualization and performance metrics</li>
-        <li>💬 Chat System: Integrated messaging and communication features</li>
-        <li>⚙️ System Settings: Configurable admin settings and preferences</li>
-        <li>🔍 Advanced Data Management: Search, filtering, sorting, pagination, and bulk actions for efficient handling of large datasets</li>
-        <li>🎨 Theme Customization: Fully customizable UI with authenticated access and robust error handling</li>
-        <li>📱 Responsive Design: Fully responsive navigation optimized for all devices</li>
-      </ul>
-      `,
-        role: `
-      Full-Stack Developer <br/>
-      Built the entire application from scratch:
-      <ul>
-        <li>✅ Frontend Architecture: Designed scalable and secure UI architecture with authenticated access</li>
-        <li>🎨 UI Development: Implemented using ReactJS, TypeScript, TanStack Router, Shadcn UI, and Tailwind CSS</li>
-        <li>🔄 State Management: Integrated Zustand for efficient state management</li>
-        <li>📊 Data Management: Implemented advanced workflows including search, filtering, sorting, pagination, and bulk actions</li>
-        <li>🛡️ Security: Built robust error handling and authentication systems</li>
-        <li>🚀 Performance: Optimized for smooth performance with large datasets</li>
-      </ul>
+      A full-featured admin dashboard designed for real-world admin workflows, featuring comprehensive  <br/>user management, task tracking, analytics, chatfunctionality, and configurable system settings.
       `,
         techStack: [
             'ReactJS',
@@ -155,32 +109,10 @@ export const PROJECTS: IProject[] = [
         title: 'ZenZone',
         slug: 'zenzone',
         liveUrl: 'https://zenzone-six.vercel.app/',
+        sourceCode: 'https://github.com/Sukriti-m/zenzone',
         year: 2024,
         description: `
-      An immersive productivity and focus application featuring customizable digital workspaces with 30+ high-resolution video backgrounds and ambient soundscapes. Designed to enhance user engagement and productivity through a beautiful, distraction-free environment. <br/> <br/>
-      
-      Key Features:<br/>
-      <ul>
-        <li>🎬 30+ Video Backgrounds: High-resolution video backgrounds for immersive workspaces</li>
-        <li>🎵 Ambient Soundscapes: Customizable audio environments for focus and relaxation</li>
-        <li>⏱️ Pomodoro Timer: Built-in productivity timer for focused work sessions</li>
-        <li>✅ Task Management: Comprehensive task tracking and management system</li>
-        <li>🎨 Draggable UI Components: Interactive and customizable workspace elements</li>
-        <li>🎛️ Media Controls: Full control over background videos and sounds</li>
-        <li>💼 Workspace Personalization: Customize your digital workspace to match your preferences</li>
-      </ul>
-      `,
-        role: `
-      Frontend Developer <br/>
-      Developed the entire application:
-      <ul>
-        <li>✅ Frontend Development: Built using ReactJS, Redux, React Router, and Tailwind CSS</li>
-        <li>🎨 UI/UX Design: Created immersive and engaging user interface with smooth animations</li>
-        <li>🔄 State Management: Implemented Redux for efficient state management across the application</li>
-        <li>📱 Responsive Design: Engineered performance-optimized multi-page application with lazy loading</li>
-        <li>⚡ Performance: Optimized asset handling and responsive layouts for smooth user experience</li>
-        <li>🧩 Third-Party Integration: Integrated Axios for API calls, Swiper for carousels, and React Icons</li>
-      </ul>
+      An immersive productivity and focus application featuring customizable digital workspaces with 30+<br/>  high-resolution video backgrounds and ambient soundscapes. Designed to enhance user engagement and <br/> productivity through a beautiful, distraction-free environment.
       `,
         techStack: [
             'ReactJS',
@@ -197,6 +129,29 @@ export const PROJECTS: IProject[] = [
             '/projects/images/epikcart-1.png',
             '/projects/images/epikcart-2.png',
             '/projects/images/epikcart-3.png',
+        ],
+    },
+    {
+        title: 'Exam Portal',
+        slug: 'exam-portal',
+        sourceCode: 'https://github.com/Sukriti-m/exam-portal-2.0',
+        year: 2024,
+        description: `
+      Developed a full-stack exam platform used by 400 students for recruitment assessments, supporting <br/> end-to-end test workflows.
+      `,
+        techStack: [
+            'ReactJS',
+            'NodeJS',
+            'ExpressJS',
+            'MongoDB',
+            'Mongoose',
+        ],
+        thumbnail: '/projects/thumbnail/devLinks.jpg',
+        longThumbnail: '/projects/long/devLinks.jpg',
+        images: [
+            '/projects/images/devLinks-1.png',
+            '/projects/images/devLinks-2.png',
+            '/projects/images/devLinks-3.png',
         ],
     },
 ];

@@ -1,20 +1,48 @@
 'use client';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 gsap.registerPlugin(useGSAP);
 
 const CustomCursor = () => {
     const svgRef = useRef<SVGSVGElement>(null);
+    const [isEnabled, setIsEnabled] = useState(false);
+
+    useEffect(() => {
+        const checkWidth = () => {
+            setIsEnabled(window.innerWidth >= 768);
+        };
+
+        checkWidth();
+        window.addEventListener('resize', checkWidth);
+
+        return () => {
+            window.removeEventListener('resize', checkWidth);
+        };
+    }, []);
 
     useGSAP((context, contextSafe) => {
-        if (window.innerWidth < 768) return;
+        if (!isEnabled || !svgRef.current) return;
 
         const handleMouseMove = contextSafe?.((e: MouseEvent) => {
             if (!svgRef.current) return;
 
             const { clientX, clientY } = e;
+
+            // Check if mouse is within the document bounds
+            if (
+                clientX < 0 ||
+                clientY < 0 ||
+                clientX > document.documentElement.clientWidth ||
+                clientY > document.documentElement.clientHeight
+            ) {
+                gsap.to(svgRef.current, {
+                    opacity: 0,
+                    duration: 0.2,
+                });
+                return;
+            }
 
             gsap.to(svgRef.current, {
                 x: clientX,
@@ -25,23 +53,34 @@ const CustomCursor = () => {
             });
         }) as any;
 
-        window.addEventListener('mousemove', handleMouseMove);
+        const handleMouseLeave = contextSafe?.(() => {
+            if (!svgRef.current) return;
+            gsap.to(svgRef.current, {
+                opacity: 0,
+                duration: 0.2,
+            });
+        }) as any;
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseleave', handleMouseLeave);
 
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseleave', handleMouseLeave);
         };
-    });
+    }, { scope: svgRef, dependencies: [isEnabled] });
+
+    if (!isEnabled) return null;
 
     return (
         <svg
             width="27"
             height="30"
             viewBox="0 0 27 30"
-            className="hidden md:block fixed top-0 left-0 opacity-0 z-[50] pointer-events-none" // -translate-x-1/2 -translate-y-1/2
+            className="fixed top-0 left-0 opacity-0 z-[50] pointer-events-none"
             fill="none"
             id="cursor"
             strokeWidth="2"
-            opacity="0"
             xmlns="http://www.w3.org/2000/svg"
             ref={svgRef}
         >
