@@ -73,9 +73,17 @@ export const MY_STACK = {
             icon: '/logo/git.png',
         },
         {
+            name: 'Linux',
+            icon: '/logo/linux.png',
+        },
+        {
             name: 'AWS',
             icon: '/logo/aws.png',
         },
+        {
+            name: 'Postman',
+            icon: '/logo/postman.png',
+        }
     ],
 };
 
@@ -97,12 +105,10 @@ export const PROJECTS: IProject[] = [
             'Tailwind CSS',
             'Zustand',
         ],
-        thumbnail: '/projects/thumbnail/devLinks.jpg',
-        longThumbnail: '/projects/long/devLinks.jpg',
+        thumbnail: '/projects/images/admin.png',
+        longThumbnail: '/projects/images/admin.png',
         images: [
-            '/projects/images/devLinks-1.png',
-            '/projects/images/devLinks-2.png',
-            '/projects/images/devLinks-3.png',
+            '/projects/images/admin.png',
         ],
     },
     {
@@ -112,7 +118,7 @@ export const PROJECTS: IProject[] = [
         sourceCode: 'https://github.com/Sukriti-m/zenzone',
         year: 2024,
         description: `
-      An immersive productivity and focus application featuring customizable digital workspaces with 30+<br/>  high-resolution video backgrounds and ambient soundscapes. Designed to enhance user engagement and <br/> productivity through a beautiful, distraction-free environment.
+      An immersive productivity and focus application featuring customizable digital workspaces with 30+<br/>  high-resolution video backgrounds and ambient soundscapes. Designed to enhance user<br/> engagement and productivity through a beautiful, distraction-free environment.
       `,
         techStack: [
             'ReactJS',
@@ -123,12 +129,10 @@ export const PROJECTS: IProject[] = [
             'Swiper',
             'React Icons',
         ],
-        thumbnail: '/projects/thumbnail/epikcart.jpg',
-        longThumbnail: '/projects/long/epikcart.jpg',
+        thumbnail: '/projects/images/zenzone.png',
+        longThumbnail: '/projects/images/zenzone.png',
         images: [
-            '/projects/images/epikcart-1.png',
-            '/projects/images/epikcart-2.png',
-            '/projects/images/epikcart-3.png',
+            '/projects/images/zenzone.png',
         ],
     },
     {
@@ -146,12 +150,10 @@ export const PROJECTS: IProject[] = [
             'MongoDB',
             'Mongoose',
         ],
-        thumbnail: '/projects/thumbnail/devLinks.jpg',
+        thumbnail: '/projects/images/exam.png',
         longThumbnail: '/projects/long/devLinks.jpg',
         images: [
-            '/projects/images/devLinks-1.png',
-            '/projects/images/devLinks-2.png',
-            '/projects/images/devLinks-3.png',
+            '/projects/images/exam.png',
         ],
     },
 ];
