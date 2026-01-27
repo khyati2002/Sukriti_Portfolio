@@ -19,86 +19,91 @@ const NAV_LINKS = [
         name: 'Projects',
         href: '#selected-projects',
     },
+    {
+        name: 'Connect',
+        href: '#contact',
+    }
 ];
 
 const Navbar = () => {
-    const [activeSection, setActiveSection] = useState('');
+    const [activeSection, setActiveSection] = useState('#banner');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const isClickScrolling = useRef(false);
+    const observerRef = useRef<IntersectionObserver | null>(null);
+    const lastScrollY = useRef(0);
 
     useEffect(() => {
-        const handleScroll = () => {
-            // Don't update active section if user just clicked a nav link
-            if (isClickScrolling.current) return;
-
-            const sections = NAV_LINKS.map((link) => ({
-                id: link.href.substring(1),
-                href: link.href,
-            }));
-
-            const scrollPosition = window.scrollY + 120; // Account for navbar height + some offset
-
-            // Find the section that is currently in view
-            let currentSection = sections[0].href; // Default to first section
-
-            // Check sections from bottom to top
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = document.getElementById(sections[i].id);
-                if (section) {
-                    const sectionTop = section.offsetTop;
-                    
-                    // If scroll position has passed this section's top, this is the active section
-                    if (scrollPosition >= sectionTop) {
-                        currentSection = sections[i].href;
-                        break;
-                    }
+        // Create Intersection Observer
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                // Check if we're at the bottom of the page
+                const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+                
+                if (isAtBottom) {
+                    setActiveSection('#contact');
+                    return;
                 }
-            }
 
-            setActiveSection(currentSection);
-        };
-
-        // Use requestAnimationFrame for smoother scroll detection
-        let ticking = false;
-        const onScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    handleScroll();
-                    ticking = false;
+                // Find the most visible section
+                let mostVisible = { href: '#banner', ratio: 0 };
+                
+                entries.forEach((entry) => {
+                    const sectionHref = `#${entry.target.id}`;
+                    // Special handling for Connect section - activate with lower threshold
+                    if (sectionHref === '#contact' && entry.intersectionRatio > 0.05) {
+                        mostVisible = { href: sectionHref, ratio: 1 };
+                        return;
+                    }
+                    
+                    if (entry.intersectionRatio > mostVisible.ratio) {
+                        mostVisible = { href: sectionHref, ratio: entry.intersectionRatio };
+                    }
                 });
-                ticking = true;
+
+                // Only update if we found a visible section
+                if (mostVisible.ratio > 0) {
+                    setActiveSection(mostVisible.href);
+                }
+            },
+            {
+                root: null,
+                rootMargin: '-20% 0px -40% 0px', // Adjusted for better footer detection
+                threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            }
+        );
+
+        // Observe all sections
+        NAV_LINKS.forEach((link) => {
+            const sectionId = link.href.substring(1);
+            const section = document.getElementById(sectionId);
+            if (section && observerRef.current) {
+                observerRef.current.observe(section);
+            }
+        });
+
+        // Cleanup
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
             }
         };
-
-        window.addEventListener('scroll', onScroll, { passive: true });
-        handleScroll(); // Initial check
-
-        return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
         e.preventDefault();
+        
         // Set active section immediately when clicking
         setActiveSection(href);
-        
-        // Prevent scroll listener from overriding our manual selection
-        isClickScrolling.current = true;
         
         const element = document.querySelector(href);
         if (element) {
             const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - 80; // 80px for navbar height
+            const offsetPosition = elementPosition + window.pageYOffset - 80;
 
             window.scrollTo({
                 top: offsetPosition,
                 behavior: 'smooth',
             });
             setIsMobileMenuOpen(false);
-            
-            // Re-enable scroll listener after smooth scroll completes
-            setTimeout(() => {
-                isClickScrolling.current = false;
-            }, 1000); // Adjust timing based on your scroll duration
         }
     };
 
@@ -118,7 +123,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Navigation Links*/}
-                    <div className="hidden md:flex items-center gap-10">
+                    <div className="hidden md:flex items-center gap-8">
                         {NAV_LINKS.map((link) => (
                             <a
                                 key={link.name}
