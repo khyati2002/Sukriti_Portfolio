@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const NAV_LINKS = [
     {
@@ -24,9 +24,13 @@ const NAV_LINKS = [
 const Navbar = () => {
     const [activeSection, setActiveSection] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const isClickScrolling = useRef(false);
 
     useEffect(() => {
         const handleScroll = () => {
+            // Don't update active section if user just clicked a nav link
+            if (isClickScrolling.current) return;
+
             const sections = NAV_LINKS.map((link) => ({
                 id: link.href.substring(1),
                 href: link.href,
@@ -77,6 +81,9 @@ const Navbar = () => {
         // Set active section immediately when clicking
         setActiveSection(href);
         
+        // Prevent scroll listener from overriding our manual selection
+        isClickScrolling.current = true;
+        
         const element = document.querySelector(href);
         if (element) {
             const elementPosition = element.getBoundingClientRect().top;
@@ -87,6 +94,11 @@ const Navbar = () => {
                 behavior: 'smooth',
             });
             setIsMobileMenuOpen(false);
+            
+            // Re-enable scroll listener after smooth scroll completes
+            setTimeout(() => {
+                isClickScrolling.current = false;
+            }, 1000); // Adjust timing based on your scroll duration
         }
     };
 
