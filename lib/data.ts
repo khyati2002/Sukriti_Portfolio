@@ -1,4 +1,5 @@
 import { IProject } from '@/types';
+import { Github, Linkedin } from 'lucide-react';
 
 export const GENERAL_INFO = {
     email: 'sukritimaurya.fzd@gmail.com',
@@ -8,8 +9,26 @@ export const GENERAL_INFO = {
 };
 
 export const SOCIAL_LINKS = [
-    { name: 'github', url: 'https://github.com/sukriti-m' },
-    { name: 'linkedin', url: 'https://www.linkedin.com/in/sukriti-maurya-5248421b0' },
+    {
+        name: 'GitHub',
+        href: 'https://github.com/Sukriti-m',
+        icon: Github,
+    },
+    {
+        name: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/sukriti-maurya-5248421b0',
+        icon: Linkedin,
+    },
+    {
+        name: 'LeetCode',
+        href: 'https://leetcode.com/Sukriti-m',
+        icon: '/logo/leetcode.svg',
+    },
+    {
+        name: 'Hashnode',
+        href: 'https://sukritim.hashnode.dev', 
+        icon: '/logo/hashnode.svg',
+    },
 ];
 
 export const MY_STACK = {
