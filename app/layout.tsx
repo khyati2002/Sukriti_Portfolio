@@ -28,7 +28,7 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-    title: 'Portfolio - Sukriti Maurya',
+    title: 'Sukriti Maurya',
     description: 'Personal portfolio of Sukriti Maurya',
 };
 
