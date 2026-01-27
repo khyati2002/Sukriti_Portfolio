@@ -104,7 +104,7 @@ const ProjectList = () => {
     };
 
     return (
-        <section className="pb-section" id="selected-projects">
+        <section className="pb-32 md:pb-36" id="selected-projects">
             <div className="container">
                 <SectionTitle title="MY PROJECTS" />
 
