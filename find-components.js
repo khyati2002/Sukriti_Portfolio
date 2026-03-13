@@ -23,7 +23,7 @@ const path = require("path");
 
 // ── CLI args ──────────────────────────────────────────────────────────────────
 const args       = process.argv.slice(2);
-const srcDir     = path.resolve(args.find((a) => !a.startsWith("--")) || "./src");
+const srcDir     = path.resolve(args.find((a) => !a.startsWith("--")) || "./components");
 const tsconfigArg = args.find((a) => a.startsWith("--tsconfig="))?.split("=")[1];
 const outputArg  = args.find((a) => a.startsWith("--output="))?.split("=")[1] || "components.json";
 
