@@ -1,13 +1,13 @@
 [
   {
     "name": "Button",
-    "description": "A versatile button component that can render as a link or button, with optional loading state, icon, and variant styles.",
+    "description": "A versatile button component that can render as a link or button, supports loading state, and applies various style variants.",
     "file": "components/Button.tsx",
     "props": []
   },
   {
     "name": "Project",
-    "description": "Displays a project with a thumbnail, title, tech stack, description, and links to live demo and source code, with animations on hover.",
+    "description": "A component that displays project details including title, description, tech stack, and links, with animations on hover.",
     "file": "app/_components/Project.tsx",
     "props": [
       {
@@ -42,13 +42,13 @@
   },
   {
     "name": "SectionFlower",
-    "description": "Renders an SVG flower icon with optional title and pattern fill.",
+    "description": "An SVG component rendering a flower pattern with optional title and titleId for accessibility.",
     "file": "components/icons/SectionFlower.tsx",
     "props": []
   },
   {
     "name": "SectionTitle",
-    "description": "Displays a section title with an optional icon, customizable styles, and a default spinning flower icon if no icon is provided.",
+    "description": "A component that renders a section title with an optional icon, customizable styles, and a default spinning flower icon.",
     "file": "components/SectionTitle.tsx",
     "props": [
       {
@@ -83,7 +83,7 @@
   },
   {
     "name": "TransitionLink",
-    "description": "A React component that wraps a Next.js Link to add a GSAP animation transition before navigating to a new page or going back.",
+    "description": "A React component that wraps a Next.js Link to perform a GSAP page transition animation before navigating to a new route or executing a click handler.",
     "file": "components/TransitionLink.tsx",
     "props": [
       {
