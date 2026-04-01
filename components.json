@@ -1,21 +1,98 @@
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "app/globals.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
-    "prefix": ""
+[
+  {
+    "name": "Button",
+    "description": "A versatile button component that can render as a link or button, with optional loading state, icon, and variant styles.",
+    "file": "components/Button.tsx",
+    "props": []
   },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+  {
+    "name": "Project",
+    "description": "Displays a project with a thumbnail, title, tech stack, description, and links to live demo and source code, with animations on hover.",
+    "file": "app/_components/Project.tsx",
+    "props": [
+      {
+        "name": "index",
+        "type": "number",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "project",
+        "type": "IProject",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "selectedProject",
+        "type": "string | null",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "onMouseEnter",
+        "type": "(_slug: string) => void",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    ]
   },
-  "iconLibrary": "lucide"
-}
+  {
+    "name": "SectionFlower",
+    "description": "Renders an SVG flower icon with optional title and pattern fill.",
+    "file": "components/icons/SectionFlower.tsx",
+    "props": []
+  },
+  {
+    "name": "SectionTitle",
+    "description": "Displays a section title with an optional icon, customizable styles, and a default spinning flower icon if no icon is provided.",
+    "file": "components/SectionTitle.tsx",
+    "props": [
+      {
+        "name": "icon",
+        "type": "any",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "classNames",
+        "type": "{ container?: string; title?: string; icon?: string | undefined; } | undefined",
+        "required": false,
+        "defaultValue": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "defaultValue": null,
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "TransitionLink",
+    "description": "A React component that wraps a Next.js Link to add a GSAP animation transition before navigating to a new page or going back.",
+    "file": "components/TransitionLink.tsx",
+    "props": [
+      {
+        "name": "back",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false,
+        "description": ""
+      }
+    ]
+  }
+]
